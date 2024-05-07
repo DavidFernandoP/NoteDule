@@ -1,38 +1,33 @@
-//import 'dart:js';
-
 import 'package:flutter/material.dart';
 import 'package:notedule/main.dart';
 import 'package:notedule/sistema/globals.dart';
 import 'package:notedule/servicios/database_helper.dart';
-
 import '../modelos/materia_modelo.dart';
 
-class AddSubjectForm extends StatelessWidget {
-  final List<String> daysOfWeek = ['LUN', 'MAR', 'MIE', 'JUE', 'VIE', 'SAB']; // Definición de daysOfWeek
-  final TextEditingController _nombreController = TextEditingController();
-  final TextEditingController _inicioController = TextEditingController();
-  final TextEditingController _finController = TextEditingController();
+class AddSubjectForm extends StatefulWidget {
+  @override
+  AddSubjectFormState createState() => AddSubjectFormState();
+}
+
+class AddSubjectFormState extends State<AddSubjectForm> {
+  late String nombreValue = "";
+  late String diaValue = "";
+  late String desdeValue = "";
+  late String hastaValue = "";
+  late String colorValue = "";
+
+  final GlobalKey formkey = GlobalKey<FormState>();
 
   void _guardarMateria(BuildContext context) async {
-  // Obtener valores de los campos del formulario
-  String nombre = _nombreController.text;
-  String colorHex = "";
-  String dia = "LUN";
-  String inicio = _inicioController.text;
-  String fin = _finController.text;
-
-  // Crear una instancia del modelo de datos Materia con los valores del formulario
   Materia materia = Materia(
-    nombre: nombre,
-    color: colorHex,
-    dia: dia,
-    inicio: inicio,
-    fin: fin,
+    nombre: nombreValue,
+    color: colorValue,
+    dia: diaValue,
+    inicio: desdeValue,
+    fin: hastaValue,
   );
-
   // Agregar la materia a la base de datos utilizando DatabaseHelper
   await DatabaseHelper.addNote(materia);
-
   // Cerrar el modal
   Navigator.of(context as BuildContext).pop();
 
@@ -74,7 +69,10 @@ class AddSubjectForm extends StatelessWidget {
                     borderRadius: BorderRadius.circular(8.0), // Personaliza la esquina del borde
                   ),
                   child: TextFormField(
-                    controller: _nombreController, // Asocia el controlador al campo de texto
+                    //controller: _nombreController, // Asocia el controlador al campo de texto
+                    onSaved: (value){
+                      nombreValue = value!;
+                    },
                     style: TextStyle(color: globals.blanco),
                     decoration: InputDecoration(
                       filled: true,
@@ -91,30 +89,134 @@ class AddSubjectForm extends StatelessWidget {
           SizedBox(height: 16.0),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: daysOfWeek.map((day) => SizedBox(
-              width: 50.0,
+          children: <Widget>[
+            Expanded(
               child: ElevatedButton(
                 onPressed: () {
-                  // Almacenar el valor de day en la variable dia
-                  String diaSeleccionado = day;
-                  
-                  // Opcional: Puedes imprimir el día seleccionado para verificar
-                  print('Día seleccionado: $diaSeleccionado');
-                  
-                  // Aquí puedes hacer lo que necesites con la variable diaSeleccionado
+                  setState(() {
+                    diaValue = 'LUN';
+                  });
                 },
                 style: ElevatedButton.styleFrom(
-                  primary: globals.negro,
-                  onPrimary: globals.blanco,
-                  side: BorderSide(color: globals.blanco),
+                  primary: diaValue == 'LUN' ? globals.blanco : globals.negro,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
                 ),
                 child: Text(
-                  day,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 8.0),
+                  'LUN',
+                  style: TextStyle(
+                    color: diaValue == 'LUN' ? globals.negro : globals.blanco,
+                  ),
                 ),
               ),
-            )).toList(),
+            ),
+            Expanded(
+              child: ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    diaValue = 'MAR';
+                  });
+                },
+                style: ElevatedButton.styleFrom(
+                  primary: diaValue == 'MAR' ? globals.blanco : globals.negro,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                child: Text(
+                  'MAR',
+                  style: TextStyle(
+                    color: diaValue == 'MAR' ? globals.negro : globals.blanco,
+                  ),
+                ),
+              ),
+            ),
+            Expanded(
+              child: ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    diaValue = 'MIE';
+                  });
+                },
+                style: ElevatedButton.styleFrom(
+                  primary: diaValue == 'MIE' ? globals.blanco : globals.negro,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                child: Text(
+                  'MIE',
+                  style: TextStyle(
+                    color: diaValue == 'MIE' ? globals.negro : globals.blanco,
+                  ),
+                ),
+              ),
+            ),
+            Expanded(
+              child: ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    diaValue = 'JUE';
+                  });
+                },
+                style: ElevatedButton.styleFrom(
+                  primary: diaValue == 'JUE' ? globals.blanco : globals.negro,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                child: Text(
+                  'JUE',
+                  style: TextStyle(
+                    color: diaValue == 'JUE' ? globals.negro : globals.blanco,
+                  ),
+                ),
+              ),
+            ),
+            Expanded(
+              child: ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    diaValue = 'VIE';
+                  });
+                },
+                style: ElevatedButton.styleFrom(
+                  primary: diaValue == 'VIE' ? globals.blanco : globals.negro,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                child: Text(
+                  'VIE',
+                  style: TextStyle(
+                    color: diaValue == 'VIE' ? globals.negro : globals.blanco,
+                  ),
+                ),
+              ),
+            ),
+            Expanded(
+              child: ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    diaValue = 'SAB';
+                  });
+                },
+                style: ElevatedButton.styleFrom(
+                  primary: diaValue == 'SAB' ? globals.blanco : globals.negro,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                child: Text(
+                  'SAB',
+                  style: TextStyle(
+                    color: diaValue == 'SAB' ? globals.negro : globals.blanco,
+                  ),
+                ),
+              ),
+            ), 
+          ],
           ),
           SizedBox(height: 16.0),
           Row(
@@ -131,6 +233,9 @@ class AddSubjectForm extends StatelessWidget {
                     borderRadius: BorderRadius.circular(8.0),
                   ),
                   child: TextFormField(
+                    onSaved: (value){
+                      desdeValue = value!;
+                    },
                     style: TextStyle(color: globals.blanco), // Color del texto dentro del campo
                     decoration: InputDecoration(
                       filled: true, // Activa el relleno
@@ -155,6 +260,9 @@ class AddSubjectForm extends StatelessWidget {
                     borderRadius: BorderRadius.circular(8.0), // Personaliza la esquina del borde
                   ),
                   child: TextFormField(
+                    onSaved: (value){
+                      hastaValue = value!;
+                    },
                     style: TextStyle(color: globals.blanco), // Color del texto dentro del campo
                     decoration: InputDecoration(
                       filled: true, // Activa el relleno
@@ -364,4 +472,3 @@ Widget _colorButton(String colorHex) {
 Color _hexToColor(String code) {
   return Color(int.parse(code.substring(1, 7), radix: 16) + 0xFF000000);
 }
-
