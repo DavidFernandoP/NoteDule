@@ -63,14 +63,14 @@ class _HorarioEscolarState extends State {
         Materia? materia = materias.firstWhere(
           (materia) =>
               materia.dia == dia &&
-              materia.inicio == hora, //&&
+              materia.inicio == hora.replaceFirst(":00", ""), //&&
               //materia.fin == hora, // Verifica que la hora actual esté dentro del horario de la materia
           orElse: () => Materia(
             nombre: "", 
             color: "",
             dia: "",
-            inicio: "",
-            fin: "",
+            inicio: "7",
+            fin: "7",
           ),
         );
         // Construye el widget correspondiente
@@ -116,6 +116,7 @@ class _HorarioEscolarState extends State {
                   DatabaseHelper.deleteNote(materia);
                 } else {
                   // Navega a otra vista si el modo eliminar no está activado
+                  globals.materiaActual = materia.nombre;
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -129,13 +130,14 @@ class _HorarioEscolarState extends State {
                 //color: Colors.blue,
                 decoration: BoxDecoration(
                   color: Colors.blue,
+                  //color: Color(int.parse("0xFF$materia.colorValue", radix: 16)),
                   border: mostrarMarcoRojo
                       ? Border.all(color: Colors.red, width: 2.0) // Mostrar borde rojo si eliminar es verdadero
                       : null, // No mostrar borde rojo si eliminar es falso
                 ),
                 child: Text(
-                  materia.nombre,
-                  style: TextStyle(color: Colors.white),
+                  materia.nombre.substring(0, 1),
+                  style: TextStyle(color: Colors.white, fontSize: 24),
                 ),
               ),
             );

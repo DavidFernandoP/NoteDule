@@ -1,5 +1,6 @@
 // lib/screens/notas_screen.dart
 import 'package:flutter/material.dart';
+import 'package:notedule/sistema/globals.dart';
 import '../modelos/apunte.dart';
 import '../widgets/notas_list.dart';
 import '../widgets/boton_volver.dart';
@@ -44,7 +45,7 @@ class NotasScreen extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: Center(
               child: Text(
-                'Historia',
+                globals.materiaActual,
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,

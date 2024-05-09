@@ -61,17 +61,17 @@ class DatabaseHelper {
     List<Materia> defaultMaterias = [
       Materia(
         nombre: "Matemáticas",
-        color: "0xFF00FF00", // Color verde
+        color: "00FF00", // Color verde
         dia: "LUN",
-        inicio: "08:00",
-        fin: "10:00",
+        inicio: "8",
+        fin: "10",
       ),
       Materia(
         nombre: "Historia",
-        color: "0xFFFF0000", // Color rojo
+        color: "FF0000", // Color rojo
         dia: "JUE",
-        inicio: "12:00",
-        fin: "13:00",
+        inicio: "12",
+        fin: "13",
       ),
       // Puedes agregar más materias según sea necesario
     ];

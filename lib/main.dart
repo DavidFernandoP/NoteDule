@@ -17,8 +17,8 @@ void main() async{
     for (var materia in materias) {
       print("Nombre: ${materia.nombre}, Color: ${materia.color}, Día: ${materia.dia}, Inicio: ${materia.inicio}, Fin: ${materia.fin}");
     }
-    await DatabaseHelper.deleteAllNotes();
-    print("Todas las materias han sido eliminadas");
+    /*await DatabaseHelper.deleteAllNotes();
+    print("Todas las materias han sido eliminadas");*/
   } else {
     // Si la base de datos está vacía, muestra un mensaje indicándolo
     print("La base de datos está vacía");
