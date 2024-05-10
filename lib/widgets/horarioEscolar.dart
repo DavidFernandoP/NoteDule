@@ -9,7 +9,38 @@ class HorarioEscolar extends StatefulWidget {
   _HorarioEscolarState createState() => _HorarioEscolarState();
 }
 
+Color getColorFromValue(String value) {
+  switch (value) {
+    case "FF0000":
+      return Color(0xFFFF0000); // Rojo
+    case "FF8A00":
+      return Color(0xFFFF8A00); // Naranja
+    case "FFE500":
+      return Color(0xFFFFE500); // Amarillo
+    case "05FF00":
+      return Color(0xFF05FF00); // Verde
+    case "00FFE0":
+      return Color(0xFF00FFE0); // Turquesa
+    case "001AFF":
+      return Color(0xFF001AFF); // Azul
+    case "8F00FF":
+      return Color(0xFF8F00FF); // Morado
+    case "FA00FF":
+      return Color(0xFFFA00FF); // Rosa
+    case "FF4694":
+      return Color(0xFFFF4694); // Rosa claro
+    default:
+      return Colors.blue; // Color predeterminado si el valor no coincide con ninguno de los casos anteriores
+  }
+}
+
 class _HorarioEscolarState extends State {
+  void actualizarHorario() {
+    setState(() {
+      // Actualiza el estado del horario escolar aquí
+    });
+  }
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -129,8 +160,7 @@ class _HorarioEscolarState extends State {
                 alignment: Alignment.center,
                 //color: Colors.blue,
                 decoration: BoxDecoration(
-                  color: Colors.blue,
-                  //color: Color(int.parse("0xFF$materia.colorValue", radix: 16)),
+                  color: getColorFromValue(materia.color),
                   border: mostrarMarcoRojo
                       ? Border.all(color: Colors.red, width: 2.0) // Mostrar borde rojo si eliminar es verdadero
                       : null, // No mostrar borde rojo si eliminar es falso

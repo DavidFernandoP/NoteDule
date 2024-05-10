@@ -328,7 +328,7 @@ class AddSubjectFormState extends State<AddSubjectForm> {
                 InkWell(
                   onTap: () {
                   setState(() {
-                    colorValue = "#FF0000";
+                    colorValue = "FF0000";
                   });
                 },
                   child: Container(
@@ -338,7 +338,7 @@ class AddSubjectFormState extends State<AddSubjectForm> {
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       border: Border.all(
-                        color: colorValue == "#FF0000" ? globals.blanco : globals.negro,
+                        color: colorValue == "FF0000" ? globals.blanco : globals.negro,
                         width: 2.0, // Ancho del borde del botón 
                       ),
                       color: Color(0xFFFF0000),
@@ -348,7 +348,7 @@ class AddSubjectFormState extends State<AddSubjectForm> {
                 InkWell(
                   onTap: () {
                   setState(() {
-                    colorValue = "#FF8A00";
+                    colorValue = "FF8A00";
                   });
                 },
                   child: Container(
@@ -358,7 +358,7 @@ class AddSubjectFormState extends State<AddSubjectForm> {
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       border: Border.all(
-                        color: colorValue == "#FF8A00" ? globals.blanco : globals.negro,
+                        color: colorValue == "FF8A00" ? globals.blanco : globals.negro,
                         width: 2.0, // Ancho del borde del botón
                       ),
                       color: Color(0xFFFF8A00),
@@ -368,7 +368,7 @@ class AddSubjectFormState extends State<AddSubjectForm> {
                 InkWell(
                   onTap: () {
                   setState(() {
-                    colorValue = "#FFE500";
+                    colorValue = "FFE500";
                   });
                 },
                   child: Container(
@@ -378,7 +378,7 @@ class AddSubjectFormState extends State<AddSubjectForm> {
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       border: Border.all(
-                        color: colorValue == "#FFE500" ? globals.blanco : globals.negro,
+                        color: colorValue == "FFE500" ? globals.blanco : globals.negro,
                         width: 2.0, // Ancho del borde del botón
                       ),
                       color: Color(0xFFFFE500),
@@ -388,7 +388,7 @@ class AddSubjectFormState extends State<AddSubjectForm> {
                 InkWell(
                   onTap: () {
                   setState(() {
-                    colorValue = "#05FF00";
+                    colorValue = "05FF00";
                   });
                 },
                   child: Container(
@@ -398,7 +398,7 @@ class AddSubjectFormState extends State<AddSubjectForm> {
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       border: Border.all(
-                        color: colorValue == "#05FF00" ? globals.blanco : globals.negro,
+                        color: colorValue == "05FF00" ? globals.blanco : globals.negro,
                         width: 2.0, // Ancho del borde del botón
                       ),
                       color: Color(0xFF05FF00),
@@ -408,7 +408,7 @@ class AddSubjectFormState extends State<AddSubjectForm> {
                 InkWell(
                   onTap: () {
                   setState(() {
-                    colorValue = "#00FFE0";
+                    colorValue = "00FFE0";
                   });
                 },
                   child: Container(
@@ -418,7 +418,7 @@ class AddSubjectFormState extends State<AddSubjectForm> {
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       border: Border.all(
-                        color: colorValue == "#00FFE0" ? globals.blanco : globals.negro,
+                        color: colorValue == "00FFE0" ? globals.blanco : globals.negro,
                         width: 2.0, // Ancho del borde del botón
                       ),
                       color: Color(0xFF00FFE0),
@@ -428,7 +428,7 @@ class AddSubjectFormState extends State<AddSubjectForm> {
                 InkWell(
                   onTap: () {
                   setState(() {
-                    colorValue = "#001AFF";
+                    colorValue = "001AFF";
                   });
                 },
                   child: Container(
@@ -438,7 +438,7 @@ class AddSubjectFormState extends State<AddSubjectForm> {
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       border: Border.all(
-                        color: colorValue == "#001AFF" ? globals.blanco : globals.negro,
+                        color: colorValue == "001AFF" ? globals.blanco : globals.negro,
                         width: 2.0, // Ancho del borde del botón
                       ),
                       color: Color(0xFF001AFF),
@@ -448,7 +448,7 @@ class AddSubjectFormState extends State<AddSubjectForm> {
                 InkWell(
                   onTap: () {
                   setState(() {
-                    colorValue = "#8F00FF";
+                    colorValue = "8F00FF";
                   });
                 },
                   child: Container(
@@ -458,7 +458,7 @@ class AddSubjectFormState extends State<AddSubjectForm> {
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       border: Border.all(
-                        color: colorValue == "#8F00FF" ? globals.blanco : globals.negro,
+                        color: colorValue == "8F00FF" ? globals.blanco : globals.negro,
                         width: 2.0, // Ancho del borde del botón
                       ),
                       color: Color(0xFF8F00FF),
@@ -468,7 +468,7 @@ class AddSubjectFormState extends State<AddSubjectForm> {
                 InkWell(
                   onTap: () {
                   setState(() {
-                    colorValue = "#FA00FF";
+                    colorValue = "FA00FF";
                   });
                 },
                   child: Container(
@@ -478,7 +478,7 @@ class AddSubjectFormState extends State<AddSubjectForm> {
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       border: Border.all(
-                        color: colorValue == "#FA00FF" ? globals.blanco : globals.negro,
+                        color: colorValue == "FA00FF" ? globals.blanco : globals.negro,
                         width: 2.0, // Ancho del borde del botón
                       ),
                       color: Color(0xFFFA00FF),
@@ -488,7 +488,7 @@ class AddSubjectFormState extends State<AddSubjectForm> {
                 InkWell(
                   onTap: () {
                   setState(() {
-                    colorValue = "#FF4694";
+                    colorValue = "FF4694";
                   });
                 },
                   child: Container(
@@ -498,7 +498,7 @@ class AddSubjectFormState extends State<AddSubjectForm> {
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       border: Border.all(
-                        color: colorValue == "#FF4694" ? globals.blanco : globals.negro,
+                        color: colorValue == "FF4694" ? globals.blanco : globals.negro,
                         width: 2.0, // Ancho del borde del botón
                       ),
                       color: Color(0xFFFF4694),
@@ -524,9 +524,10 @@ class AddSubjectFormState extends State<AddSubjectForm> {
               TextButton(
                 onPressed: () {
                   _guardarMateria(context); // Pasa el contexto como parámetro
-                  setState(() {
-                    globals.eliminar = globals.eliminar;
-                  });
+                  
+                  /*setState(() {
+                    globals.eliminar = !globals.eliminar;
+                  });*/
                 },
                 child: Icon(
                   Icons.check,
