@@ -7,6 +7,10 @@ import 'package:numberpicker/numberpicker.dart';
 import 'package:notedule/widgets/horarioEscolar.dart';
 
 class AddSubjectForm extends StatefulWidget {
+  final VoidCallback? onPressedCallback;
+
+  AddSubjectForm({this.onPressedCallback});
+
   @override
   AddSubjectFormState createState() => AddSubjectFormState();
 }
@@ -524,10 +528,9 @@ class AddSubjectFormState extends State<AddSubjectForm> {
               TextButton(
                 onPressed: () {
                   _guardarMateria(context); // Pasa el contexto como parámetro
-                  
-                  /*setState(() {
-                    globals.eliminar = !globals.eliminar;
-                  });*/
+                  if (widget.onPressedCallback != null) {
+                    widget.onPressedCallback!();
+                  }
                 },
                 child: Icon(
                   Icons.check,

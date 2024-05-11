@@ -91,11 +91,30 @@ class _HorarioEscolarState extends State {
         String hora = horas[horaIndex];
 
         // Busca si hay una materia para esta hora y día
-        Materia? materia = materias.firstWhere(
+        /*Materia? materia = materias.firstWhere(
           (materia) =>
               materia.dia == dia &&
               materia.inicio == hora.replaceFirst(":00", ""), //&&
               //materia.fin == hora, // Verifica que la hora actual esté dentro del horario de la materia
+          orElse: () => Materia(
+            nombre: "", 
+            color: "",
+            dia: "",
+            inicio: "7",
+            fin: "7",
+          ),
+        );*/
+        Materia? materia = materias.firstWhere(
+          (materia) {
+            // Convierte la hora actual a un número entero
+            int horaInt = int.parse(hora.split(':')[0]);
+            // Convierte las horas de inicio y fin de la materia a enteros
+            int inicio = int.parse(materia.inicio);
+            int fin = int.parse(materia.fin);
+
+            // Verifica si la hora actual está dentro del rango de la materia
+            return materia.dia == dia && horaInt >= inicio && horaInt < fin;
+          },
           orElse: () => Materia(
             nombre: "", 
             color: "",
@@ -143,9 +162,11 @@ class _HorarioEscolarState extends State {
             return GestureDetector(
               onTap: () {
                 if (globals.eliminar == true) {
-                  // Elimina la materia si el modo eliminar está activado
-                  DatabaseHelper.deleteNote(materia);
-                } else {
+                  setState(() {
+                    // Elimina la materia si el modo eliminar está activado
+                    DatabaseHelper.deleteNote(materia);
+                  });
+                }else {
                   // Navega a otra vista si el modo eliminar no está activado
                   globals.materiaActual = materia.nombre;
                   Navigator.push(

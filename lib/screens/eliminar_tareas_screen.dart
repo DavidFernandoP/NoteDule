@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../models/tarea.dart';
+import '../modelos/tarea.dart';
 import '../widgets/icono_eliminar.dart';
 import '../widgets/boton_volver.dart';
 import '../widgets/boton_eliminar.dart';

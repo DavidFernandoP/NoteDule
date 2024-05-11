@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../models/tarea.dart'; // Importamos el modelo de Tarea
+import '../modelos/tarea.dart'; // Importamos el modelo de Tarea
 import 'tarea_card.dart'; // Importamos el widget de tarjeta de tarea
 
 class TareasList extends StatelessWidget {

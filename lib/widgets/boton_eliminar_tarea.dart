@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../models/tarea.dart'; // Importamos el modelo de Tarea
+import '../modelos/tarea.dart'; // Importamos el modelo de Tarea
 import '../screens/eliminar_tareas_screen.dart'; // Importamos la pantalla de eliminar tareas
 
 class BotonEliminar extends StatelessWidget {

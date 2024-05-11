@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../models/tarea.dart'; // Importamos el modelo de Tarea
+import '../modelos/tarea.dart'; // Importamos el modelo de Tarea
 
 class TareaCard extends StatelessWidget {
   final Tarea tarea; // Cambiamos el tipo de la propiedad a Tarea

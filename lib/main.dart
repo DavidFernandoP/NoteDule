@@ -34,6 +34,12 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   bool _showCancelButton = false;
 
+  void actualizarHorario() {
+    setState(() {
+      // Actualizar el estado del horario escolar aquí
+    });
+  }
+
   void _toggleCancelButton() {
     setState(() {
       _showCancelButton = !_showCancelButton;
@@ -102,7 +108,7 @@ class _MyAppState extends State<MyApp> {
                         showModalBottomSheet(
                           context: context,
                           builder: (BuildContext context) {
-                            return AddSubjectForm();
+                            return AddSubjectForm(onPressedCallback: actualizarHorario,);
                           },
                         );
                       },
