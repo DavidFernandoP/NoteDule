@@ -40,6 +40,45 @@ class _HorarioEscolarState extends State {
       // Actualiza el estado del horario escolar aquí
     });
   }
+
+  // Función para mostrar el diálogo emergente
+void mostrarConfirmacionEliminar(BuildContext context, Materia materia) {
+  // Mostrar un diálogo emergente con AlertDialog
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      // Retorna el AlertDialog
+      return AlertDialog(
+        title: Text('¿Estás seguro de que quieres eliminar la materia: ${materia.nombre}?'),
+        actions: <Widget>[
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              // Botón de "Cancelar"
+              TextButton(
+                onPressed: () {
+                  // Cierra el diálogo emergente sin eliminar la materia
+                  Navigator.of(context).pop();
+                },
+                child: Text('Cancelar', style: TextStyle(fontSize: 20),),
+              ),
+              // Botón de "Aceptar"
+              TextButton(
+                onPressed: () {
+                  // Elimina la materia y cierra el diálogo emergente
+                  DatabaseHelper.deleteNote(materia);
+                  setState(() {});
+                  Navigator.of(context).pop();
+                },
+                child: Text('Aceptar', style: TextStyle(fontSize: 20),),
+              ),
+            ],
+          ),
+        ],
+      );
+    },
+  );
+}
   
   @override
   Widget build(BuildContext context) {
@@ -164,7 +203,8 @@ class _HorarioEscolarState extends State {
                 if (globals.eliminar == true) {
                   setState(() {
                     // Elimina la materia si el modo eliminar está activado
-                    DatabaseHelper.deleteNote(materia);
+                    //DatabaseHelper.deleteNote(materia);
+                    mostrarConfirmacionEliminar(context, materia);
                   });
                 }else {
                   // Navega a otra vista si el modo eliminar no está activado
