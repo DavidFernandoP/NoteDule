@@ -16,7 +16,6 @@ class NotasScreen extends StatefulWidget {
 
 class _NotasScreenState extends State<NotasScreen> {
   List<Apunte> apuntes = [];
-  //String materiaActual = 'Proyecto Integrador 3';
 
   @override
   void initState() {

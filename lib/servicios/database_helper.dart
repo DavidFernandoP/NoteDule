@@ -16,9 +16,9 @@ class DatabaseHelper {
           await db.execute(
               "CREATE TABLE Materia(id INTEGER PRIMARY KEY, nombre TEXT NOT NULL, color TEXT NOT NULL, dia TEXT NOT NULL, inicio TEXT NOT NULL, fin TEXT NOT NULL);"
           );
-          /*await db.execute(
+          await db.execute(
               "CREATE TABLE Apuntes(id INTEGER PRIMARY KEY, materia TEXT NOT NULL, titulo TEXT NOT NULL, fecha DATE NOT NULL, contenido TEXT NOT NULL, isSelected TEXT NOT NULL);",
-          );
+          );/*
           await db.execute(
               "CREATE TABLE Tareas(id INTEGER PRIMARY KEY, materia TEXT NOT NULL, titulo TEXT NOT NULL, fecha DATE NOT NULL, contenido TEXT NOT NULL, check TEXT NOT NULL);",
           );*/
