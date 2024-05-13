@@ -1,33 +1,40 @@
-// lib/models/apunte.dart
+// lib/modelos/apunte.dart
+
 class Apunte {
-  final int? id;
+  final int id;
   final String titulo;
   final String contenido;
   final DateTime fecha;
-  final bool isSelected; 
+  final String materia; 
+  bool isSelected;
 
-  const Apunte({
-    required this.titulo, 
-    required this.contenido, 
-    required this.fecha, 
+  Apunte({
+    this.id = 0,
+    required this.titulo,
+    required this.contenido,
+    required this.fecha,
+    required this.materia, 
     this.isSelected = false,
-    this.id
   });
 
-  factory Apunte.fromJson(Map<String,dynamic> json) => Apunte(
-    id: json['id'],
-    titulo: json['titulo'],
-    contenido: json['contenido'],
-    fecha: json['fecha'],
-    isSelected: json['isSelected'],
-  );
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'titulo': titulo,
+      'contenido': contenido,
+      'fecha': fecha.toIso8601String(),
+      'materia': materia, 
+    };
+  }
 
-  Map<String,dynamic> toJson() => {
-    'id': id,
-    'titulo': titulo,
-    'contenido': contenido,
-    'fecha': fecha,
-    'isSelected': isSelected,
-  };
+  factory Apunte.fromJson(Map<String, dynamic> json) {
+    return Apunte(
+      id: json['id'],
+      titulo: json['titulo'],
+      contenido: json['contenido'],
+      fecha: DateTime.parse(json['fecha']),
+      materia: json['materia'], 
+    );
+  }
 }
 

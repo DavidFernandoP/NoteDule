@@ -3,7 +3,7 @@ import '../modelos/tarea.dart';
 import '../widgets/icono_eliminar.dart';
 import '../widgets/boton_volver.dart';
 import '../widgets/boton_eliminar.dart';
-import '../services/tareas_service.dart'; // Importamos el archivo donde está definido el método deleteTarea
+//import '../services/tareas_service.dart'; // Importamos el archivo donde está definido el método deleteTarea
 
 class EliminarTareasScreen extends StatelessWidget {
   final List<Tarea> tareas;

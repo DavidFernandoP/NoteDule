@@ -1,128 +1,142 @@
 // lib/screens/notas_form_screen.dart
 import 'package:flutter/material.dart';
-import '../widgets/boton_cancelar.dart'; 
-import '../widgets/boton_guardar.dart'; 
+import '../widgets/boton_cancelar.dart';
+import '../widgets/boton_guardar.dart';
+import '../servicios/database_helper.dart';
+import '../modelos/apunte.dart';
+import '../sistema/globals.dart';
 
 class NotasFormScreen extends StatefulWidget {
+  final String materiaActual;
+
+  NotasFormScreen({required this.materiaActual});
+
   @override
   _NotasFormScreenState createState() => _NotasFormScreenState();
 }
 
 class _NotasFormScreenState extends State<NotasFormScreen> {
-  final _tituloController = TextEditingController();
-  final _contenidoController = TextEditingController();
-  final _fechaController = TextEditingController();
+  late TextEditingController _tituloController;
+  late TextEditingController _contenidoController;
+  late TextEditingController _fechaController;
+
+  @override
+  void initState() {
+    super.initState();
+    _tituloController = TextEditingController();
+    _contenidoController = TextEditingController();
+    _fechaController = TextEditingController();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.black,
+        backgroundColor: globals.negro,
         title: Text(
-          'Nuevo Apunte',
-          style: TextStyle(color: Colors.white),
+          'Nuevo Apunte - ${widget.materiaActual}',
+          style: TextStyle(color: globals.blanco),
         ),
       ),
       body: Container(
-        color: Colors.black,
+        color: globals.negro,
         padding: EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildInfoField(
-              label: 'Título',
+            TextFormField(
               controller: _tituloController,
+              style: TextStyle(color: globals.blanco),
+              decoration: InputDecoration(
+                labelText: 'Título',
+                labelStyle: TextStyle(color: globals.blanco),
+                border: OutlineInputBorder(),
+              ),
             ),
             SizedBox(height: 16.0),
-            _buildInfoField(
-              label: 'Fecha',
+            TextFormField(
+              controller: _contenidoController,
+              style: TextStyle(color: globals.blanco),
+              decoration: InputDecoration(
+                labelText: 'Contenido',
+                labelStyle: TextStyle(color: globals.blanco),
+                border: OutlineInputBorder(),
+              ),
+              maxLines: null, // Para permitir múltiples líneas de texto
+            ),
+            SizedBox(height: 16.0),
+            TextFormField(
               controller: _fechaController,
+              style: TextStyle(color: globals.blanco),
+              decoration: InputDecoration(
+                labelText: 'Fecha',
+                labelStyle: TextStyle(color: globals.blanco),
+                border: OutlineInputBorder(),
+              ),
+              onTap: () async {
+                DateTime? pickedDate = await showDatePicker(
+                  context: context,
+                  initialDate: DateTime.now(),
+                  firstDate: DateTime(2000),
+                  lastDate: DateTime(2101),
+                );
+                if (pickedDate != null) {
+                  _fechaController.text = pickedDate.toString();
+                }
+              },
             ),
-            SizedBox(height: 16.0),
-            _buildContentField(),
           ],
         ),
       ),
       bottomNavigationBar: BottomAppBar(
-        color: Colors.black,
+        color: globals.negro,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            BotonCancelar(),
-            BotonGuardar(),
+            BotonCancelar(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+            BotonGuardar(
+              onPressed: () {
+                _guardarApunte(context, widget.materiaActual);
+              },
+            ),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildInfoField({required String label, required TextEditingController controller}) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          '$label:',
-          style: TextStyle(color: Colors.white),
-        ),
-        SizedBox(width: 8.0),
-        Expanded(
-          child: Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(8.0),
-            ),
-            child: Padding(
-              padding: EdgeInsets.all(16.0),
-              child: TextField(
-                controller: controller,
-                style: TextStyle(color: Colors.black),
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                ),
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
+  Future<void> _guardarApunte(BuildContext context, String materia) async {
+    try {
+      String titulo = _tituloController.text;
+      String contenido = _contenidoController.text;
+      String fechaString = _fechaController.text;
 
-Widget _buildContentField() {
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      Text(
-        'Contenido:',
-        style: TextStyle(color: Colors.white),
-      ),
-      SizedBox(height: 8.0),
-      Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(8.0),
-        ),
-        child: Padding(
-          padding: EdgeInsets.all(16.0),
-          child: TextField(
-            controller: _contenidoController,
-            style: TextStyle(color: Colors.black),
-            maxLines: null,
-            decoration: InputDecoration(
-              border: InputBorder.none,
-            ),
-          ),
-        ),
-      ),
-    ],
-  );
-}
+      // Parsear la fecha de String a DateTime
+      DateTime fecha = DateTime.parse(fechaString);
 
+      Apunte nuevoApunte = Apunte(
+        id: 0,
+        titulo: titulo,
+        contenido: contenido,
+        fecha: fecha, // Utiliza el DateTime parseado
+        materia: materia, // Asigna la materia actual al apunte
+      );
 
-  @override
-  void dispose() {
-    _tituloController.dispose();
-    _contenidoController.dispose();
-    _fechaController.dispose();
-    super.dispose();
+      int result = await DatabaseHelper.addApunte(nuevoApunte);
+      if (result > 0) {
+        // Éxito
+        print('Apunte guardado correctamente.');
+        Navigator.pop(context);
+      } else {
+        // Falla
+        print('No se pudo guardar el apunte.');
+      }
+    } catch (error) {
+      print('Error al guardar el apunte: $error');
+    }
   }
 }

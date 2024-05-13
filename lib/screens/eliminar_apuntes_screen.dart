@@ -1,99 +1,82 @@
+//lib\screens\eliminar_apuntes_screen.dart
+
 import 'package:flutter/material.dart';
 import '../modelos/apunte.dart';
 import '../widgets/icono_eliminar.dart';
 import '../widgets/boton_volver.dart';
 import '../widgets/boton_eliminar.dart';
+import '../servicios/database_helper.dart';
 
-class EliminarApuntesScreen extends StatelessWidget {
+class EliminarApuntesScreen extends StatefulWidget {
   final List<Apunte> apuntes;
+  final String materiaActual;
 
-  EliminarApuntesScreen({required this.apuntes});
+  EliminarApuntesScreen({
+    required this.apuntes,
+    required this.materiaActual,
+  });
+
+  @override
+  _EliminarApuntesScreenState createState() => _EliminarApuntesScreenState();
+}
+
+class _EliminarApuntesScreenState extends State<EliminarApuntesScreen> {
+  List<Apunte> _apuntes = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _apuntes = List.from(widget.apuntes);
+  }
+
+  void _eliminarApunte(int index) async {
+    // Obtener el apunte a eliminar
+    Apunte apunte = _apuntes[index];
+
+    // Eliminar el apunte de la base de datos usando el método estático DatabaseHelper.deleteApunte
+    try {
+      await DatabaseHelper.deleteApunte(apunte);
+    } catch (error) {
+      print('Error al eliminar el apunte de la base de datos: $error');
+      // Aquí puedes mostrar un mensaje de error al usuario si lo deseas
+      return;
+    }
+
+    // Si la eliminación de la base de datos fue exitosa, elimina el apunte de la lista
+    setState(() {
+      _apuntes.removeAt(index);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.black,
-        elevation: 0,
-        leading: Container(),
-        title: Center(
-          child: Text(
-            'NOTEDULE',
-            style: TextStyle(
-              color: Colors.white,
-            ),
-          ),
-        ),
+        title: Text('Eliminar Apuntes - ${widget.materiaActual}'),
       ),
-      backgroundColor: Colors.black,
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Center(
-              child: Text(
-                'Proyecto Integrador 3',
-                style: TextStyle(
-                  fontSize: 20,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-          ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: apuntes.length + 1,
-              itemBuilder: (context, index) {
-                if (index == 0) {
-                  return Padding(
-                    padding: const EdgeInsets.only(left: 16.0, top: 8.0),
-                    child: Text(
-                      'Apuntes:',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  );
-                } else {
-                  final apunte = apuntes[index - 1];
-                  return Column(
-                    children: [
-                      ListTile(
-                        title: Text(
-                          apunte.titulo,
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        subtitle: Text(
-                          apunte.fecha.toString(),
-                          style: TextStyle(color: Colors.grey),
-                        ),
-                        trailing: IconoEliminar(
-                          onPressed: () {},
-                        ),
-                      ),
-                      Divider( 
-                        color: Colors.grey.withOpacity(0.5), 
-                        thickness: 1, 
-                      ),
-                    ],
-                  );
-                }
+      body: ListView.builder(
+        itemCount: _apuntes.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            title: Text(_apuntes[index].titulo),
+            subtitle: Text(_apuntes[index].fecha.toString()),
+            trailing: IconoEliminar(
+              onPressed: () {
+                _eliminarApunte(index);
               },
             ),
-          ),
-        ],
+          );
+        },
       ),
       bottomNavigationBar: BottomAppBar(
-        color: Colors.black,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             BotonVolver(),
-            BotonEliminar(apuntes: apuntes),
+            BotonEliminar(
+              apuntes: _apuntes,
+              materiaActual: widget.materiaActual,
+            ),
           ],
         ),
       ),

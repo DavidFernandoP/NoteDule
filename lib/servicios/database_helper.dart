@@ -2,6 +2,7 @@ import 'package:notedule/modelos/materia_modelo.dart';
 import 'package:notedule/modelos/apunte.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
+import 'package:notedule/modelos/tarea.dart';
 import 'package:flutter/material.dart';
 
 class DatabaseHelper {
@@ -95,7 +96,7 @@ class DatabaseHelper {
 
     return defaultMaterias;
   }
-  /*
+  
   //---------------------Metodos para apuntes-------------------------
   static Future<int> addApunte(Apunte apunte) async {
     final db = await _getDB();
@@ -128,7 +129,7 @@ class DatabaseHelper {
       whereArgs: [materia],
     );
   }
-  
+  /*
   //----------------------Metodos para tareas--------------------------
   static Future<int> addTarea(Tarea tarea) async {
     final db = await _getDB();

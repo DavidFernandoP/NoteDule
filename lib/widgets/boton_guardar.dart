@@ -2,13 +2,15 @@
 import 'package:flutter/material.dart';
 
 class BotonGuardar extends StatelessWidget {
+  final VoidCallback? onPressed; 
+
+  BotonGuardar({this.onPressed});
+
   @override
   Widget build(BuildContext context) {
-    return IconButton(
-      icon: Icon(Icons.check, color: Colors.white),
-      onPressed: () {
-        Navigator.pop(context);
-      },
+    return TextButton(
+      onPressed: onPressed, 
+      child: Text('Guardar'),
     );
   }
 }
