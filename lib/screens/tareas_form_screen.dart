@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
 import '../widgets/boton_cancelar.dart'; 
-import '../widgets/boton_guardar.dart';
-
-
-import 'package:flutter/material.dart';
-import '../widgets/boton_cancelar.dart'; // Importamos el widget BotonCancelar
-import '../widgets/boton_guardar.dart'; // Importamos el widget BotonGuardar
-import '../services/tareas_service.dart'; // Importamos el archivo donde está definido el método addTarea
+import '../widgets/boton_guardar.dart'; 
+import '../servicios/database_helper.dart'; 
 
 class TareasFormScreen extends StatefulWidget {
   @override
@@ -14,7 +9,6 @@ class TareasFormScreen extends StatefulWidget {
 }
 
 class _TareasFormScreenState extends State<TareasFormScreen> {
-  // Controladores para los campos de entrada de texto
   final _tituloController = TextEditingController();
   final _contenidoController = TextEditingController();
   final _fechaController = TextEditingController();
@@ -29,7 +23,6 @@ class _TareasFormScreenState extends State<TareasFormScreen> {
           style: TextStyle(color: Colors.white),
         ),
       ),
-      // Envuelve el contenido en SingleChildScrollView para permitir desplazamiento
       body: SingleChildScrollView(
         child: Container(
           color: Colors.black,
@@ -37,33 +30,29 @@ class _TareasFormScreenState extends State<TareasFormScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Construye el campo de entrada para el título
               _buildInfoField(
                 label: 'Título',
                 controller: _tituloController,
               ),
               SizedBox(height: 16.0),
-              // Construye el campo de entrada para la fecha
               _buildInfoField(
                 label: 'Fecha',
                 controller: _fechaController,
               ),
               SizedBox(height: 16.0),
-              // Construye el campo de entrada para el contenido
               _buildContentField(_contenidoController),
             ],
           ),
         ),
       ),
-      // Barra de navegación inferior con botones de cancelar y guardar
       bottomNavigationBar: BottomAppBar(
         color: Colors.black,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            BotonCancelar(), // Widget BotonCancelar
+            BotonCancelar(),
             BotonGuardar(
-              onPressed: _guardarTarea, // Llamamos a _guardarTarea cuando se presiona el botón "Guardar"
+              onPressed: _guardarTarea,
             ),
           ],
         ),
@@ -71,7 +60,6 @@ class _TareasFormScreenState extends State<TareasFormScreen> {
     );
   }
 
-  // Construye un campo de información con un título y un campo de texto
   Widget _buildInfoField({required String label, required TextEditingController controller}) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -103,7 +91,6 @@ class _TareasFormScreenState extends State<TareasFormScreen> {
     );
   }
 
-  // Construye un campo de entrada para el contenido
   Widget _buildContentField(TextEditingController controller) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -134,19 +121,15 @@ class _TareasFormScreenState extends State<TareasFormScreen> {
     );
   }
 
-  // Método para guardar la tarea
   void _guardarTarea() async {
-    // Crear una nueva instancia de Tarea con los datos de los controladores
     Tarea nuevaTarea = Tarea(
       titulo: _tituloController.text,
       contenido: _contenidoController.text,
       fecha: _fechaController.text,
     );
 
-    // Llamar al método addTarea para guardar la tarea en la base de datos
-    int resultado = await addTarea(nuevaTarea);
+    int resultado = await DatabaseHelper.addTarea(nuevaTarea);
 
-    // Mostrar un diálogo según el resultado de la operación
     if (resultado != null) {
       showDialog(
         context: context,
@@ -182,7 +165,6 @@ class _TareasFormScreenState extends State<TareasFormScreen> {
     }
   }
 
-  // Liberar los controladores al destruir el widget
   @override
   void dispose() {
     _tituloController.dispose();
