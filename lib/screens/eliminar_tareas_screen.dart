@@ -3,7 +3,7 @@ import '../modelos/tarea.dart';
 import '../widgets/icono_eliminar.dart';
 import '../widgets/boton_volver.dart';
 import '../widgets/boton_eliminar.dart';
-//import '../services/tareas_service.dart'; // Importamos el archivo donde está definido el método deleteTarea
+import '../servicios/database_helper.dart'; // Importamos el archivo donde está definido el método deleteTarea
 
 class EliminarTareasScreen extends StatelessWidget {
   final List<Tarea> tareas;
@@ -106,7 +106,7 @@ class EliminarTareasScreen extends StatelessWidget {
   // Método para eliminar una tarea
   void _eliminarTarea(BuildContext context, Tarea tarea) async {
     // Llamar al método deleteTarea para eliminar la tarea de la base de datos
-    int resultado = await deleteTarea(tarea);
+    final resultado = await DatabaseHelper.deleteTarea(tarea);
 
     // Mostrar un diálogo con el resultado de la operación
     if (resultado != null) {
