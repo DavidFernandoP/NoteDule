@@ -6,6 +6,7 @@ import '../widgets/icono_eliminar.dart';
 import '../widgets/boton_volver.dart';
 import '../widgets/boton_eliminar.dart';
 import '../servicios/database_helper.dart';
+import '../sistema/globals.dart'; // Importamos globals.dart
 
 class EliminarApuntesScreen extends StatefulWidget {
   final List<Apunte> apuntes;
@@ -30,30 +31,34 @@ class _EliminarApuntesScreenState extends State<EliminarApuntesScreen> {
   }
 
   void _eliminarApunte(int index) async {
-    // Obtener el apunte a eliminar
-    Apunte apunte = _apuntes[index];
-
-    // Eliminar el apunte de la base de datos usando el método estático DatabaseHelper.deleteApunte
-    try {
-      await DatabaseHelper.deleteApunte(apunte);
-    } catch (error) {
-      print('Error al eliminar el apunte de la base de datos: $error');
-      // Aquí puedes mostrar un mensaje de error al usuario si lo deseas
-      return;
-    }
-
-    // Si la eliminación de la base de datos fue exitosa, elimina el apunte de la lista
-    setState(() {
-      _apuntes.removeAt(index);
-    });
+  Apunte apunte = _apuntes[index];
+  try {
+    await DatabaseHelper.deleteApunte(apunte);
+  } catch (error) {
+    print('Error al eliminar el apunte de la base de datos: $error');
+    return;
   }
+  setState(() {
+    _apuntes.removeAt(index);
+  });
+}
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Eliminar Apuntes - ${widget.materiaActual}'),
+        title: Text(
+          'Eliminar Apuntes - ${widget.materiaActual}',
+          style: TextStyle(
+              color: globals
+                  .blanco), // Utilizamos globals.blanco para el color del texto
+        ),
+        backgroundColor:
+            globals.negro, // Utilizamos globals.negro para el color del appbar
       ),
+      backgroundColor:
+          globals.negro, // Establecemos el color de fondo del Scaffold
       body: ListView.builder(
         itemCount: _apuntes.length,
         itemBuilder: (context, index) {
@@ -69,6 +74,8 @@ class _EliminarApuntesScreenState extends State<EliminarApuntesScreen> {
         },
       ),
       bottomNavigationBar: BottomAppBar(
+        color: globals
+            .negro, // Utilizamos globals.negro para el color del bottomNavigationBar
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [

@@ -17,7 +17,7 @@ class ApunteCard extends StatelessWidget {
       child: ListTile(
         title: Text(
           apunte.titulo,
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(color: isSelected ? Colors.black : Colors.white),
         ),
         subtitle: Text(
           apunte.fecha.toString(),

@@ -1,3 +1,4 @@
+//lib\servicios\database_helper.dart
 import 'package:notedule/modelos/materia_modelo.dart';
 import 'package:notedule/modelos/apunte.dart';
 import 'package:sqflite/sqflite.dart';
@@ -12,20 +13,20 @@ class DatabaseHelper {
   static Future<Database> _getDB() async {
     return openDatabase(
       join(await getDatabasesPath(), _dbName),
-        onCreate: (db, version) async { 
-          await db.execute(
-              "CREATE TABLE Materia(id INTEGER PRIMARY KEY, nombre TEXT NOT NULL, color TEXT NOT NULL, dia TEXT NOT NULL, inicio TEXT NOT NULL, fin TEXT NOT NULL);"
-          );
-          await db.execute(
-              "CREATE TABLE Apuntes(id INTEGER PRIMARY KEY, materia TEXT NOT NULL, titulo TEXT NOT NULL, fecha DATE NOT NULL, contenido TEXT NOT NULL, isSelected TEXT NOT NULL);",
-          );/*
+      onCreate: (db, version) async {
+        await db.execute(
+            "CREATE TABLE Materia(id INTEGER PRIMARY KEY, nombre TEXT NOT NULL, color TEXT NOT NULL, dia TEXT NOT NULL, inicio TEXT NOT NULL, fin TEXT NOT NULL);");
+        await db.execute(
+          "CREATE TABLE Apuntes(id INTEGER PRIMARY KEY, materia TEXT NOT NULL, titulo TEXT NOT NULL, fecha DATE NOT NULL, contenido TEXT NOT NULL, isSelected TEXT NOT NULL);",
+        ); /*
           await db.execute(
               "CREATE TABLE Tareas(id INTEGER PRIMARY KEY, materia TEXT NOT NULL, titulo TEXT NOT NULL, fecha DATE NOT NULL, contenido TEXT NOT NULL, check TEXT NOT NULL);",
           );*/
-        },
-        version: _version,
+      },
+      version: _version,
     );
   }
+
 //---------------------Metodos para materias------------------------------------
   static Future<int> addNote(Materia note) async {
     final db = await _getDB();
@@ -62,7 +63,7 @@ class DatabaseHelper {
 
     if (maps.isEmpty) {
       return _getDefaultMaterias();
-      
+
       //return null;
     }
 
@@ -96,7 +97,7 @@ class DatabaseHelper {
 
     return defaultMaterias;
   }
-  
+
   //---------------------Metodos para apuntes-------------------------
   static Future<int> addApunte(Apunte apunte) async {
     final db = await _getDB();
@@ -129,6 +130,65 @@ class DatabaseHelper {
       whereArgs: [materia],
     );
   }
+
+  Future<void> insertarDatosPrueba() async {
+  // Crear apuntes de prueba para la materia "Historia"
+  List<Apunte> apuntesHistoria = [
+    Apunte(
+      materia: "Historia",
+      titulo: 'Apunte Historia 1',
+      fecha: DateTime.now(),
+      contenido: 'Contenido del Apunte de Historia 1',
+    ),
+    Apunte(
+      materia: "Historia",
+      titulo: 'Apunte Historia 2',
+      fecha: DateTime.now(),
+      contenido: 'Contenido del Apunte de Historia 2',
+    ),
+    Apunte(
+      materia: "Historia",
+      titulo: 'Apunte Historia 3',
+      fecha: DateTime.now(),
+      contenido: 'Contenido del Apunte de Historia 3',
+    ),
+  ];
+
+  // Insertar los apuntes de prueba para la materia "Historia"
+  for (var apunte in apuntesHistoria) {
+    await addApunte(apunte);
+  }
+
+  // Crear apuntes de prueba para la materia "Matemáticas"
+  List<Apunte> apuntesMatematicas = [
+    Apunte(
+      materia: "Matemáticas",
+      titulo: 'Apunte Matemáticas 1',
+      fecha: DateTime.now(),
+      contenido: 'Contenido del Apunte de Matemáticas 1',
+    ),
+    Apunte(
+      materia: "Matemáticas",
+      titulo: 'Apunte Matemáticas 2',
+      fecha: DateTime.now(),
+      contenido: 'Contenido del Apunte de Matemáticas 2',
+    ),
+    Apunte(
+      materia: "Matemáticas",
+      titulo: 'Apunte Matemáticas 3',
+      fecha: DateTime.now(),
+      contenido: 'Contenido del Apunte de Matemáticas 3',
+    ),
+  ];
+
+  // Insertar los apuntes de prueba para la materia "Matemáticas"
+  for (var apunte in apuntesMatematicas) {
+    await addApunte(apunte);
+  }
+}
+
+
+
   /*
   //----------------------Metodos para tareas--------------------------
   static Future<int> addTarea(Tarea tarea) async {

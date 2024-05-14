@@ -5,27 +5,28 @@ import '../modelos/apunte.dart';
 
 class ApunteListItem extends StatefulWidget {
   final Apunte apunte;
+  final bool isSelected;
   final ValueChanged<bool> onSelected;
 
-  ApunteListItem({required this.apunte, required this.onSelected});
+  ApunteListItem({required this.apunte, required this.isSelected, required this.onSelected});
 
   @override
   _ApunteListItemState createState() => _ApunteListItemState();
 }
 
 class _ApunteListItemState extends State<ApunteListItem> {
-  bool _isSelected = false;
-
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: Text(widget.apunte.titulo),
+      title: Text(
+        widget.apunte.titulo,
+        style: TextStyle(color: widget.isSelected ? Colors.black : Colors.white),
+      ),
       subtitle: Text(widget.apunte.fecha.toString()),
       trailing: GestureDetector(
         onTap: () {
           setState(() {
-            _isSelected = !_isSelected;
-            widget.onSelected(_isSelected);
+            widget.onSelected(!widget.isSelected);
           });
         },
         child: Container(
@@ -34,9 +35,9 @@ class _ApunteListItemState extends State<ApunteListItem> {
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             border: Border.all(color: Colors.white),
-            color: _isSelected ? Colors.white : Colors.transparent,
+            color: widget.isSelected ? Colors.white : Colors.transparent,
           ),
-          child: _isSelected ? Icon(Icons.check, color: Colors.black) : null,
+          child: widget.isSelected ? Icon(Icons.check, color: Colors.black) : null,
         ),
       ),
     );

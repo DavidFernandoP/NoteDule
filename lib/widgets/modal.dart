@@ -103,7 +103,7 @@ class AddSubjectFormState extends State<AddSubjectForm> {
                   });
                 },
                 style: ElevatedButton.styleFrom(
-                  primary: diaValue == 'LUN' ? globals.blanco : globals.negro,
+                  backgroundColor: diaValue == 'LUN' ? globals.blanco : globals.negro,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
@@ -124,7 +124,7 @@ class AddSubjectFormState extends State<AddSubjectForm> {
                   });
                 },
                 style: ElevatedButton.styleFrom(
-                  primary: diaValue == 'MAR' ? globals.blanco : globals.negro,
+                  backgroundColor: diaValue == 'MAR' ? globals.blanco : globals.negro,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
@@ -145,7 +145,7 @@ class AddSubjectFormState extends State<AddSubjectForm> {
                   });
                 },
                 style: ElevatedButton.styleFrom(
-                  primary: diaValue == 'MIÉ' ? globals.blanco : globals.negro,
+                  backgroundColor: diaValue == 'MIÉ' ? globals.blanco : globals.negro,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
@@ -166,7 +166,7 @@ class AddSubjectFormState extends State<AddSubjectForm> {
                   });
                 },
                 style: ElevatedButton.styleFrom(
-                  primary: diaValue == 'JUE' ? globals.blanco : globals.negro,
+                  backgroundColor: diaValue == 'JUE' ? globals.blanco : globals.negro,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
@@ -187,7 +187,7 @@ class AddSubjectFormState extends State<AddSubjectForm> {
                   });
                 },
                 style: ElevatedButton.styleFrom(
-                  primary: diaValue == 'VIE' ? globals.blanco : globals.negro,
+                  backgroundColor: diaValue == 'VIE' ? globals.blanco : globals.negro,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
@@ -208,7 +208,7 @@ class AddSubjectFormState extends State<AddSubjectForm> {
                   });
                 },
                 style: ElevatedButton.styleFrom(
-                  primary: diaValue == 'SÁB' ? globals.blanco : globals.negro,
+                  backgroundColor: diaValue == 'SÁB' ? globals.blanco : globals.negro,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
@@ -251,7 +251,7 @@ class AddSubjectFormState extends State<AddSubjectForm> {
                       child: Theme(
                         data: ThemeData(
                           textTheme: TextTheme(
-                            bodyText1: TextStyle(fontSize: 18, color: globals.blanco), // Ajusta el tamaño del texto del NumberPicker
+                            bodyLarge: TextStyle(fontSize: 18, color: globals.blanco), // Ajusta el tamaño del texto del NumberPicker
                           ),
                         ),
                         child: NumberPicker(
@@ -297,7 +297,7 @@ class AddSubjectFormState extends State<AddSubjectForm> {
                       child: Theme(
                         data: ThemeData(
                           textTheme: TextTheme(
-                            bodyText1: TextStyle(fontSize: 18, color: globals.blanco), // Ajusta el tamaño del texto del NumberPicker
+                            bodyLarge: TextStyle(fontSize: 18, color: globals.blanco), // Ajusta el tamaño del texto del NumberPicker
                           ),
                         ),
                         child: NumberPicker(

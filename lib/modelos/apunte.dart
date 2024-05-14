@@ -24,6 +24,7 @@ class Apunte {
       'contenido': contenido,
       'fecha': fecha.toIso8601String(),
       'materia': materia, 
+      'isSelected': isSelected ? 1 : 0, // Convertir a 1 o 0
     };
   }
 
@@ -34,6 +35,7 @@ class Apunte {
       contenido: json['contenido'],
       fecha: DateTime.parse(json['fecha']),
       materia: json['materia'], 
+      isSelected: json['isSelected'] == 1 ? true : false, // Convertir de 1 o 0 a booleano
     );
   }
 }

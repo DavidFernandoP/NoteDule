@@ -99,8 +99,12 @@ class _NotasFormScreenState extends State<NotasFormScreen> {
               },
             ),
             BotonGuardar(
+              materiaActual: widget.materiaActual,
+              tituloController: _tituloController,
+              contenidoController: _contenidoController,
+              fechaController: _fechaController,
               onPressed: () {
-                _guardarApunte(context, widget.materiaActual);
+                // Aquí puedes manejar la lógica del botón guardar si es necesario
               },
             ),
           ],

@@ -8,6 +8,7 @@ import '../widgets/boton_nuevo_apunte.dart';
 import '../widgets/boton_eliminar.dart';
 import '../servicios/database_helper.dart';
 import '../sistema/globals.dart';
+import '../widgets/BotonIrATareas.dart';
 
 class NotasScreen extends StatefulWidget {
   @override
@@ -17,10 +18,19 @@ class NotasScreen extends StatefulWidget {
 class _NotasScreenState extends State<NotasScreen> {
   List<Apunte> apuntes = [];
 
-  @override
+   @override
   void initState() {
     super.initState();
     _cargarApuntesDesdeDB();
+    _insertarApuntesDePrueba(); // Llamada al método para insertar apuntes de prueba
+  }
+
+  void _insertarApuntesDePrueba() async {
+    try {
+      await DatabaseHelper().insertarDatosPrueba(); // Llama al método para insertar los apuntes de prueba
+    } catch (error) {
+      print('Error al insertar apuntes de prueba: $error');
+    }
   }
 
   void _cargarApuntesDesdeDB() async {
@@ -30,8 +40,9 @@ class _NotasScreenState extends State<NotasScreen> {
 
       if (apuntesDesdeDB.isNotEmpty) {
         setState(() {
-          apuntes =
-              apuntesDesdeDB.map((apunte) => Apunte.fromJson(apunte)).toList();
+          apuntes.clear(); // Limpiar la lista antes de agregar nuevos apuntes
+          apuntes.addAll(
+              apuntesDesdeDB.map((apunte) => Apunte.fromJson(apunte)).toList());
         });
       } else {
         print('No hay apuntes en la base de datos.');
@@ -76,6 +87,7 @@ class _NotasScreenState extends State<NotasScreen> {
             color: globals.blanco,
           ),
         ),
+        /*leading: BotonIrATareas(), // Utiliza el nuevo widget en lugar de la flecha*/
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -83,7 +95,7 @@ class _NotasScreenState extends State<NotasScreen> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Center(
-              /*
+                /*
               child: Text(
                 globals.materiaActual,
                 style: TextStyle(
@@ -92,7 +104,7 @@ class _NotasScreenState extends State<NotasScreen> {
                   color: globals.blanco,
                 ),
               ),*/
-            ),
+                ),
           ),
           Expanded(
             child: NotasList(
