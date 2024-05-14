@@ -18,19 +18,10 @@ class NotasScreen extends StatefulWidget {
 class _NotasScreenState extends State<NotasScreen> {
   List<Apunte> apuntes = [];
 
-   @override
+  @override
   void initState() {
     super.initState();
     _cargarApuntesDesdeDB();
-    _insertarApuntesDePrueba(); // Llamada al método para insertar apuntes de prueba
-  }
-
-  void _insertarApuntesDePrueba() async {
-    try {
-      await DatabaseHelper().insertarDatosPrueba(); // Llama al método para insertar los apuntes de prueba
-    } catch (error) {
-      print('Error al insertar apuntes de prueba: $error');
-    }
   }
 
   void _cargarApuntesDesdeDB() async {
@@ -42,7 +33,10 @@ class _NotasScreenState extends State<NotasScreen> {
         setState(() {
           apuntes.clear(); // Limpiar la lista antes de agregar nuevos apuntes
           apuntes.addAll(
-              apuntesDesdeDB.map((apunte) => Apunte.fromJson(apunte)).toList());
+            apuntesDesdeDB
+                .map((apunte) => Apunte.fromJson(apunte))
+                .toList(),
+          );
         });
       } else {
         print('No hay apuntes en la base de datos.');

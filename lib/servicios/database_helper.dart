@@ -124,70 +124,70 @@ class DatabaseHelper {
 
   static Future<List<Map<String, dynamic>>> getApuntes(String materia) async {
     final db = await _getDB();
-    return await db.query(
+    final List<Map<String, dynamic>> apuntes = await db.query(
       'Apuntes',
       where: 'materia = ?',
       whereArgs: [materia],
     );
+    print('Apuntes de la materia $materia: $apuntes');
+    return apuntes;
   }
 
   Future<void> insertarDatosPrueba() async {
-  // Crear apuntes de prueba para la materia "Historia"
-  List<Apunte> apuntesHistoria = [
-    Apunte(
-      materia: "Historia",
-      titulo: 'Apunte Historia 1',
-      fecha: DateTime.now(),
-      contenido: 'Contenido del Apunte de Historia 1',
-    ),
-    Apunte(
-      materia: "Historia",
-      titulo: 'Apunte Historia 2',
-      fecha: DateTime.now(),
-      contenido: 'Contenido del Apunte de Historia 2',
-    ),
-    Apunte(
-      materia: "Historia",
-      titulo: 'Apunte Historia 3',
-      fecha: DateTime.now(),
-      contenido: 'Contenido del Apunte de Historia 3',
-    ),
-  ];
+    // Crear apuntes de prueba para la materia "Historia"
+    List<Apunte> apuntesHistoria = [
+      Apunte(
+        materia: "Historia",
+        titulo: 'Apunte Historia 1',
+        fecha: DateTime.now(),
+        contenido: 'Contenido del Apunte de Historia 1',
+      ),
+      Apunte(
+        materia: "Historia",
+        titulo: 'Apunte Historia 2',
+        fecha: DateTime.now(),
+        contenido: 'Contenido del Apunte de Historia 2',
+      ),
+      Apunte(
+        materia: "Historia",
+        titulo: 'Apunte Historia 3',
+        fecha: DateTime.now(),
+        contenido: 'Contenido del Apunte de Historia 3',
+      ),
+    ];
 
-  // Insertar los apuntes de prueba para la materia "Historia"
-  for (var apunte in apuntesHistoria) {
-    await addApunte(apunte);
+    // Insertar los apuntes de prueba para la materia "Historia"
+    for (var apunte in apuntesHistoria) {
+      await addApunte(apunte);
+    }
+
+    // Crear apuntes de prueba para la materia "Matemáticas"
+    List<Apunte> apuntesMatematicas = [
+      Apunte(
+        materia: "Matemáticas",
+        titulo: 'Apunte Matemáticas 1',
+        fecha: DateTime.now(),
+        contenido: 'Contenido del Apunte de Matemáticas 1',
+      ),
+      Apunte(
+        materia: "Matemáticas",
+        titulo: 'Apunte Matemáticas 2',
+        fecha: DateTime.now(),
+        contenido: 'Contenido del Apunte de Matemáticas 2',
+      ),
+      Apunte(
+        materia: "Matemáticas",
+        titulo: 'Apunte Matemáticas 3',
+        fecha: DateTime.now(),
+        contenido: 'Contenido del Apunte de Matemáticas 3',
+      ),
+    ];
+
+    // Insertar los apuntes de prueba para la materia "Matemáticas"
+    for (var apunte in apuntesMatematicas) {
+      await addApunte(apunte);
+    }
   }
-
-  // Crear apuntes de prueba para la materia "Matemáticas"
-  List<Apunte> apuntesMatematicas = [
-    Apunte(
-      materia: "Matemáticas",
-      titulo: 'Apunte Matemáticas 1',
-      fecha: DateTime.now(),
-      contenido: 'Contenido del Apunte de Matemáticas 1',
-    ),
-    Apunte(
-      materia: "Matemáticas",
-      titulo: 'Apunte Matemáticas 2',
-      fecha: DateTime.now(),
-      contenido: 'Contenido del Apunte de Matemáticas 2',
-    ),
-    Apunte(
-      materia: "Matemáticas",
-      titulo: 'Apunte Matemáticas 3',
-      fecha: DateTime.now(),
-      contenido: 'Contenido del Apunte de Matemáticas 3',
-    ),
-  ];
-
-  // Insertar los apuntes de prueba para la materia "Matemáticas"
-  for (var apunte in apuntesMatematicas) {
-    await addApunte(apunte);
-  }
-}
-
-
 
   /*
   //----------------------Metodos para tareas--------------------------
