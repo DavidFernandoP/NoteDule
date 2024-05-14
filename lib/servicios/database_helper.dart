@@ -9,6 +9,14 @@ import 'package:flutter/material.dart';
 class DatabaseHelper {
   static const int _version = 1;
   static const String _dbName = "baseDatos.db";
+  // Define una instancia estática de DatabaseHelper
+  static final DatabaseHelper _instance = DatabaseHelper._internal();
+
+  // Constructor privado para evitar que se puedan crear instancias directamente
+  DatabaseHelper._internal();
+
+  // Método estático para acceder a la instancia única de DatabaseHelper
+  static DatabaseHelper get instance => _instance;
 
   static Future<Database> _getDB() async {
     return openDatabase(

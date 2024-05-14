@@ -38,5 +38,6 @@ class Apunte {
       isSelected: json['isSelected'] == 1 ? true : false, // Convertir de 1 o 0 a booleano
     );
   }
+
 }
 

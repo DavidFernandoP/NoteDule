@@ -21,7 +21,18 @@ class _NotasScreenState extends State<NotasScreen> {
   @override
   void initState() {
     super.initState();
+    _insertarApuntesDePrueba(); 
     _cargarApuntesDesdeDB();
+    // Llama al método para insertar apuntes de prueba
+  }
+
+  void _insertarApuntesDePrueba() async {
+    try {
+      await DatabaseHelper.instance.insertarDatosPrueba();
+      print('Apuntes de prueba insertados correctamente.');
+    } catch (error) {
+      print('Error al insertar los apuntes de prueba: $error');
+    }
   }
 
   void _cargarApuntesDesdeDB() async {
@@ -33,9 +44,7 @@ class _NotasScreenState extends State<NotasScreen> {
         setState(() {
           apuntes.clear(); // Limpiar la lista antes de agregar nuevos apuntes
           apuntes.addAll(
-            apuntesDesdeDB
-                .map((apunte) => Apunte.fromJson(apunte))
-                .toList(),
+            apuntesDesdeDB.map((apunte) => Apunte.fromJson(apunte)).toList(),
           );
         });
       } else {
