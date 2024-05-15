@@ -197,7 +197,7 @@ class DatabaseHelper {
     }
   }
 
-  /*
+  
   //----------------------Metodos para tareas--------------------------
   static Future<int> addTarea(Tarea tarea) async {
     final db = await _getDB();
@@ -229,5 +229,5 @@ class DatabaseHelper {
       where: 'materia = ?',
       whereArgs: [materia],
     );
-  }*/
+  }
 }

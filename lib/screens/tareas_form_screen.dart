@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import '../widgets/boton_cancelar.dart'; 
-import '../widgets/boton_guardar.dart'; 
+import '../widgets/boton_guardar_tarea.dart'; 
 import '../servicios/database_helper.dart'; 
+import '../modelos/tarea.dart';
 
 class TareasFormScreen extends StatefulWidget {
   @override
@@ -52,6 +53,10 @@ class _TareasFormScreenState extends State<TareasFormScreen> {
           children: [
             BotonCancelar(),
             BotonGuardar(
+              context: context,
+              tituloController: _tituloController,
+              contenidoController: _contenidoController,
+              fechaController: _fechaController,
               onPressed: _guardarTarea,
             ),
           ],
@@ -125,7 +130,9 @@ class _TareasFormScreenState extends State<TareasFormScreen> {
     Tarea nuevaTarea = Tarea(
       titulo: _tituloController.text,
       contenido: _contenidoController.text,
-      fecha: _fechaController.text,
+      fecha: _fechaController.text.isNotEmpty
+          ? DateTime.parse(_fechaController.text)
+          : DateTime.now(),
     );
 
     int resultado = await DatabaseHelper.addTarea(nuevaTarea);

@@ -3,7 +3,7 @@ import '../modelos/tarea.dart';
 import '../widgets/tareas_list.dart'; // Importamos el widget de lista de tareas
 import '../widgets/boton_volver.dart';
 import '../widgets/boton_nuevo_tarea.dart'; // Importamos el botón para añadir nueva tarea
-import '../widgets/boton_eliminar.dart';
+import '../widgets/boton_eliminar_tarea.dart';
 
 class TareasScreen extends StatelessWidget {
   @override

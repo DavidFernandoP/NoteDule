@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../modelos/tarea.dart';
 import '../widgets/icono_eliminar.dart';
 import '../widgets/boton_volver.dart';
-import '../widgets/boton_eliminar.dart';
+import '../widgets/boton_eliminar_tarea.dart';
 import '../servicios/database_helper.dart'; // Importamos el archivo donde está definido el método deleteTarea
 
 class EliminarTareasScreen extends StatelessWidget {
