@@ -1,63 +1,111 @@
 import 'package:flutter/material.dart';
-import '../widgets/boton_cancelar.dart'; 
-import '../widgets/boton_guardar_tarea.dart'; 
-import '../servicios/database_helper.dart'; 
+import '../widgets/boton_cancelar.dart';
+import '../widgets/boton_guardar.dart';
+import '../servicios/database_helper.dart';
 import '../modelos/tarea.dart';
+import '../system/globals.dart';
 
 class TareasFormScreen extends StatefulWidget {
+  final String materiaActual;
+
+  TareasFormScreen({required this.materiaActual});
+
   @override
   _TareasFormScreenState createState() => _TareasFormScreenState();
 }
 
 class _TareasFormScreenState extends State<TareasFormScreen> {
-  final _tituloController = TextEditingController();
-  final _contenidoController = TextEditingController();
-  final _fechaController = TextEditingController();
+  late TextEditingController _tituloController;
+  late TextEditingController _contenidoController;
+  late TextEditingController _fechaController;
+
+  @override
+  void initState() {
+    super.initState();
+    _tituloController = TextEditingController();
+    _contenidoController = TextEditingController();
+    _fechaController = TextEditingController();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.black,
+        backgroundColor: Globals.negro,
         title: Text(
-          'Nueva Tarea',
-          style: TextStyle(color: Colors.white),
+          'Nueva Tarea - ${widget.materiaActual}',
+          style: TextStyle(color: Globals.blanco),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          color: Colors.black,
-          padding: EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildInfoField(
-                label: 'Título',
-                controller: _tituloController,
+      body: Container(
+        color: Globals.negro,
+        padding: EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            TextFormField(
+              controller: _tituloController,
+              style: TextStyle(color: Globals.blanco),
+              decoration: InputDecoration(
+                labelText: 'Título',
+                labelStyle: TextStyle(color: Globals.blanco),
+                border: OutlineInputBorder(),
               ),
-              SizedBox(height: 16.0),
-              _buildInfoField(
-                label: 'Fecha',
-                controller: _fechaController,
+            ),
+            SizedBox(height: 16.0),
+            TextFormField(
+              controller: _contenidoController,
+              style: TextStyle(color: Globals.blanco),
+              decoration: InputDecoration(
+                labelText: 'Contenido',
+                labelStyle: TextStyle(color: Globals.blanco),
+                border: OutlineInputBorder(),
               ),
-              SizedBox(height: 16.0),
-              _buildContentField(_contenidoController),
-            ],
-          ),
+              maxLines: null, // Para permitir múltiples líneas de texto
+            ),
+            SizedBox(height: 16.0),
+            TextFormField(
+              controller: _fechaController,
+              style: TextStyle(color: Globals.blanco),
+              decoration: InputDecoration(
+                labelText: 'Fecha',
+                labelStyle: TextStyle(color: Globals.blanco),
+                border: OutlineInputBorder(),
+              ),
+              onTap: () async {
+                DateTime? pickedDate = await showDatePicker(
+                  context: context,
+                  initialDate: DateTime.now(),
+                  firstDate: DateTime(2000),
+                  lastDate: DateTime(2101),
+                );
+                if (pickedDate != null) {
+                  _fechaController.text = pickedDate.toString();
+                }
+              },
+            ),
+          ],
         ),
       ),
       bottomNavigationBar: BottomAppBar(
-        color: Colors.black,
+        color: Globals.negro,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            BotonCancelar(),
+            BotonCancelar(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
             BotonGuardar(
-              context: context,
+              materiaActual: widget.materiaActual,
               tituloController: _tituloController,
               contenidoController: _contenidoController,
               fechaController: _fechaController,
-              onPressed: _guardarTarea,
+              onPressed: () {
+                // Aquí puedes manejar la lógica del botón guardar si es necesario
+                _guardarTarea(context, widget.materiaActual);
+              },
             ),
           ],
         ),
@@ -65,118 +113,34 @@ class _TareasFormScreenState extends State<TareasFormScreen> {
     );
   }
 
-  Widget _buildInfoField({required String label, required TextEditingController controller}) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          '$label:',
-          style: TextStyle(color: Colors.white),
-        ),
-        SizedBox(width: 8.0),
-        Expanded(
-          child: Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(8.0),
-            ),
-            child: Padding(
-              padding: EdgeInsets.all(16.0),
-              child: TextField(
-                controller: controller,
-                style: TextStyle(color: Colors.black),
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                ),
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
+  Future<void> _guardarTarea(BuildContext context, String materia) async {
+    try {
+      String titulo = _tituloController.text;
+      String contenido = _contenidoController.text;
+      String fechaString = _fechaController.text;
 
-  Widget _buildContentField(TextEditingController controller) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          'Contenido:',
-          style: TextStyle(color: Colors.white),
-        ),
-        SizedBox(height: 8.0),
-        Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(8.0),
-          ),
-          child: Padding(
-            padding: EdgeInsets.all(16.0),
-            child: TextField(
-              controller: controller,
-              style: TextStyle(color: Colors.black),
-              maxLines: null,
-              decoration: InputDecoration(
-                border: InputBorder.none,
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
+      // Parsear la fecha de String a DateTime
+      DateTime fecha = DateTime.parse(fechaString);
 
-  void _guardarTarea() async {
-    Tarea nuevaTarea = Tarea(
-      titulo: _tituloController.text,
-      contenido: _contenidoController.text,
-      fecha: _fechaController.text.isNotEmpty
-          ? DateTime.parse(_fechaController.text)
-          : DateTime.now(),
-    );
-
-    int resultado = await DatabaseHelper.addTarea(nuevaTarea);
-
-    if (resultado != null) {
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: Text('Éxito'),
-          content: Text('La tarea se guardó correctamente.'),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text('OK'),
-            ),
-          ],
-        ),
+      Tarea nuevaTarea = Tarea(
+        id: 0,
+        titulo: titulo,
+        contenido: contenido,
+        fecha: fecha, // Utiliza el DateTime parseado
+        materia: materia, // Asigna la materia actual a la tarea
       );
-    } else {
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: Text('Error'),
-          content: Text('Hubo un error al guardar la tarea.'),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text('OK'),
-            ),
-          ],
-        ),
-      );
+
+      int result = await DatabaseHelper.addTarea(nuevaTarea);
+      if (result > 0) {
+        // Éxito
+        print('Tarea guardada correctamente.');
+        Navigator.pop(context);
+      } else {
+        // Falla
+        print('No se pudo guardar la tarea.');
+      }
+    } catch (error) {
+      print('Error al guardar la tarea: $error');
     }
-  }
-
-  @override
-  void dispose() {
-    _tituloController.dispose();
-    _contenidoController.dispose();
-    _fechaController.dispose();
-    super.dispose();
   }
 }
