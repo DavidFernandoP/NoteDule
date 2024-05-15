@@ -2,145 +2,91 @@ import 'package:flutter/material.dart';
 import '../modelos/tarea.dart';
 import '../widgets/icono_eliminar.dart';
 import '../widgets/boton_volver.dart';
-import '../widgets/boton_eliminar_tarea.dart';
-import '../servicios/database_helper.dart'; // Importamos el archivo donde está definido el método deleteTarea
+import '../widgets/boton_eliminar.dart';
+import '../servicios/database_helper.dart';
+import '../sistema/globals.dart';
 
-class EliminarTareasScreen extends StatelessWidget {
+class EliminarTareasScreen extends StatefulWidget {
   final List<Tarea> tareas;
+  final String materiaActual;
 
-  EliminarTareasScreen({required this.tareas});
+  EliminarTareasScreen({
+    required this.tareas,
+    required this.materiaActual,
+  });
+
+  @override
+  _EliminarTareasScreenState createState() => _EliminarTareasScreenState();
+}
+
+class _EliminarTareasScreenState extends State<EliminarTareasScreen> {
+  List<Tarea> _tareas = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _tareas = List.from(widget.tareas);
+  }
+
+  void _eliminarTarea(int index) async {
+    Tarea tarea = _tareas[index];
+    try {
+      await DatabaseHelper.deleteTarea(tarea);
+    } catch (error) {
+      print('Error al eliminar la tarea de la base de datos: $error');
+      return;
+    }
+    setState(() {
+      _tareas.removeAt(index);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.black,
-        elevation: 0,
-        leading: Container(),
-        title: Center(
-          child: Text(
-            'NOTEDULE',
-            style: TextStyle(
-              color: Colors.white,
-            ),
+        title: Text(
+          'Eliminar Tareas - ${widget.materiaActual}',
+          style: TextStyle(
+            color: Globals.blanco,
           ),
         ),
+        backgroundColor: Globals.negro,
       ),
-      backgroundColor: Colors.black,
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Center(
-              child: Text(
-                'Proyecto Integrador 3',
-                style: TextStyle(
-                  fontSize: 20,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+      backgroundColor: Globals.negro,
+      body: ListView.builder(
+        itemCount: _tareas.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            title: Text(
+              _tareas[index].titulo,
+              style: TextStyle(color: Globals.blanco),
             ),
-          ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: tareas.length + 1,
-              itemBuilder: (context, index) {
-                if (index == 0) {
-                  return Padding(
-                    padding: const EdgeInsets.only(left: 16.0, top: 8.0),
-                    child: Text(
-                      'Tareas:',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  );
-                } else {
-                  final tarea = tareas[index - 1];
-                  return Column(
-                    children: [
-                      ListTile(
-                        title: Text(
-                          tarea.titulo,
-                          style: TextStyle(color: Colors.white),
-                        ),
-                        subtitle: Text(
-                          tarea.fecha.toString(),
-                          style: TextStyle(color: Colors.grey),
-                        ),
-                        trailing: IconoEliminar(
-                          onPressed: () {
-                            _eliminarTarea(context, tarea); // Llamamos a la función para eliminar la tarea
-                          },
-                        ),
-                      ),
-                      Divider( 
-                        color: Colors.grey.withOpacity(0.5), 
-                        thickness: 1, 
-                      ),
-                    ],
-                  );
-                }
+            subtitle: Text(
+              _tareas[index].fecha.toString(),
+              style: TextStyle(color: Globals.gris),
+            ),
+            trailing: IconoEliminar(
+              onPressed: () {
+                _eliminarTarea(index);
               },
             ),
-          ),
-        ],
+          );
+        },
       ),
       bottomNavigationBar: BottomAppBar(
-        color: Colors.black,
+        color: Globals.negro,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             BotonVolver(),
-            BotonEliminar(tareas: tareas),
+            BotonEliminar(
+              tareas: _tareas,
+              materiaActual: widget.materiaActual,
+            ),
           ],
         ),
       ),
     );
-  }
-
-  // Método para eliminar una tarea
-  void _eliminarTarea(BuildContext context, Tarea tarea) async {
-    // Llamar al método deleteTarea para eliminar la tarea de la base de datos
-    final resultado = await DatabaseHelper.deleteTarea(tarea);
-
-    // Mostrar un diálogo con el resultado de la operación
-    if (resultado != null) {
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: Text('Éxito'),
-          content: Text('La tarea se eliminó correctamente.'),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text('OK'),
-            ),
-          ],
-        ),
-      );
-    } else {
-      showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: Text('Error'),
-          content: Text('Hubo un error al eliminar la tarea.'),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text('OK'),
-            ),
-          ],
-        ),
-      );
-    }
   }
 }
